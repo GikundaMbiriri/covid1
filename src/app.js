@@ -1,7 +1,7 @@
 const request =require('request');
 
-const geocode=require('./utils/geocode')
-const forecast=require('./utils/forecast')
+const covid=require('./utils/covid')
+
 const path=require('path')
 const express=require('express')
 const hbs=require('hbs');
@@ -20,7 +20,7 @@ app.use(express.static(public));
 
 app.get('',(req,res)=>{
     res.render('index',{
-        title:'Weather App',
+        title:'Covid19 App',
         name:'MGikunda'
     })
 })
@@ -34,33 +34,24 @@ app.get('/help',(req,res)=>{
     res.render('help',{
         title:'help page',
         name:'MGikunda',
-        helpMessage:'We are here to help you do what you want'
+        helpMessage:'We are here to help you do whatever you want'
     })
 })
-app.get('/weather',(req,res)=>{
-    if(!req.query.address){
+app.get('/covid',(req,res)=>{
+    if(!req.query.country){
        return res.send({
             error
         })
     }
-    geocode(req.query.address,(error,{longitude,latitude,location}={})=>{
+    covid(req.query.country,(error,{countryName,total,death,recovered,active}={})=>{
         if(error){
             return res.send({
                 error
             })
         }
-         forecast(longitude,latitude,(error,fdata)=>{
-             if(error){
-                 return res.send({
-                    error
-                })
-             }
-             res.send({
-                location:location,
-                forecast:fdata,
-                address:req.query.address
-            });
-         })
+        res.send({
+           countryName,total,death,recovered,active
+        });
      })
     // res.send({
     //     location:'nairobi',

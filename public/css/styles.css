@@ -4,7 +4,7 @@ body {
     max-width: 650px;
     margin: 0 auto;
     padding: 0 16px;
-
+    
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -19,7 +19,11 @@ footer {
     padding: 16px 0;
 
 }
+span {
+font-weight: bold;
+}
 header {
+    color: red;
     margin-top: 16px;
     margin-bottom: 48px;
 }
